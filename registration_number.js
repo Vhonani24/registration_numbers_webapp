@@ -1,39 +1,48 @@
 
 module.exports = function Registrations(pool) {
     
-    var regex = /^[A-Za-z]+$/;
+    var regex = /^[a-zA-Z]{2}\s[0-9]+$/;
 
-    async function getNames() {
-        const result = await pool.query("select * from users")
+    async function getRegistrations() {
+        const result = await pool.query("select * from regNumber")
 
         return result.rows;
 
     }
-    async function addName(name) {
-        await pool.query("INSERT INTO users(name,count) values($1,1)", [name])
+    async function addRegistration(reg) {
+        var townTag = reg.substring(0,2)
+        console.log(townTag + "this is townTag")
+        var towns_id = await getId(townTag)
+        console.log(towns_id + "this is towns_id")
+
+        await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [reg,towns_id])
 
     }
-    async function updateCounter(name) {
-        await pool.query("UPDATE users SET count = count + 1 where name = $1", [name])
+    async function getId(startString){
+        var result = await pool.query("select id from towns where start = $1", [startString])
+        return result.rows[0].id
+
 
     }
-    async function getName(name) {
-        const result = await pool.query("select * from users where name = $1", [name])
-        return result
+    
+    async function getRegistration() {
+        //console.log(regNum + "this is regnum");
+        const result = await pool.query("select * from regNumber")
+        return result.rows
 
     }
-    function greet(name,lang) {
+    function addReg(reg,town) {
 
 
-        if (name.match(regex)) {
-            if (lang === "Mandarin") {
-                return "你好吗, " + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+        if (reg.match(regex)) {
+            if (town === "All Towns") {
+                return reg.toUpperCase();
             }
-            if (lang === "Spanish") {
-                return "Como estas, " + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            if (town === "Bellville") {
+                return reg.toUpperCase();
             }
-            if (lang === "French") {
-                return "Comment ça va, " + name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            if (town === "Cape Town") {
+                return reg.toUpperCase();
             }
 
         }
@@ -41,15 +50,15 @@ module.exports = function Registrations(pool) {
 
     }
 
-    async function pushNames(enterNames) {
-        var nameToUpperCase = enterNames.charAt(0).toUpperCase() + enterNames.slice(1).toLowerCase()
+    async function pushRegNum(reg) {
+        var regToUpperCase = reg.toUpperCase()
         try {
-            var uniqueUser = await getName(nameToUpperCase)
-            if (uniqueUser.rowCount === 0) {
-                var result = await addName(nameToUpperCase)
+            var uniqueReg = await getRegistration(regToUpperCase)
+            if (uniqueReg.rowCount === 0) {
+                var result = await addRegistration(regToUpperCase)
             }
             else {
-                var result = await updateCounter(nameToUpperCase)
+                
             }
 
 
@@ -61,32 +70,20 @@ module.exports = function Registrations(pool) {
 
     }
 
-    async function setCounter() {
-       const names = await getNames()
-
-        return names.length;
-
-    }
-    async function individualCounter(individual) {
-        var count = await pool.query(`SELECT count FROM users WHERE name = $1`, [individual])
-        count = count.rows;
-        return count[0].count;
-    }
+  
+   
     async function resetDatabase() {
-        await pool.query(`DELETE  FROM users`)
+        await pool.query(`DELETE  FROM regNumber`)
 
     }
 
     return {
-        greet,
-        pushNames,
-        setCounter,
-        greeted:getNames,
-        individualCounter,
+        getId,
+        getRegistrations,
+        pushRegNum,
+        addReg,
         resetDatabase,
-        addName,
-        updateCounter,
-        getName
+        getRegistration
     }
 
 

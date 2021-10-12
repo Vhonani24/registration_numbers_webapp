@@ -1,6 +1,11 @@
 .container{
     background-color:#BC8F8F;
     
+    
+}
+h1 {
+    color: #0000FF;
+    font-family:fantasy;
 }
 body{
     margin: auto;

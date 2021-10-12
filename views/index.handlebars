@@ -10,10 +10,10 @@
 
         <div class="col-sm-3">
             <label class="visually-hidden" for="specificSizeInputName">Registration</label>
-            <input type="text" class="form-control" id="regNumber" placeholder="Enter Reg.No.">
+            <input type="text" class="form-control"name="reg" id="reg" placeholder="Enter Reg.No.">
         </div>
         <div class="col-auto">
-            <button type="submit" class="btn btn-primary" id="add">Add</button>
+            <button type="submit" class="btn btn-primary" id="submit">Add</button>
         </div>
 
         <div class="col-sm-3">
@@ -32,5 +32,9 @@
             <button type="submit" class="btn btn-primary" id="clear">Clear</button>
         </div>
 
-        <div class="retrieve"></div>
+        <div class="retrieve">
+            {{#each  listOfRegies}}
+            {{this.reg}}
+            {{/each}}
+        </div>
     </form>

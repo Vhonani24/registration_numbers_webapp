@@ -53,11 +53,13 @@ app.use(flash());
 
 app.get('/', routes.home);
 
-//app.get('/greeted', routes.greetedPage);
+
+
+app.post('/', routes.postData);
 
 
 
-//app.post('/', routes.postData);
+
 //app.post('/reset', routes.resetData);
 
 
