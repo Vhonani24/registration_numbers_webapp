@@ -1,0 +1,20 @@
+.container{
+    background-color:#BC8F8F;
+    
+}
+body{
+    margin: auto;
+    padding: 1em;
+}
+
+.test{
+    background-color: yellow;
+    border: black;
+    border-style: solid;
+    width: 125px;
+    border-radius: 25px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}

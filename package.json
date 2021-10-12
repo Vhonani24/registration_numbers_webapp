@@ -1,0 +1,39 @@
+{
+  "name": "greetings-webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vhonani24/Greetings.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vhonani24/Greetings/issues"
+  },
+  "homepage": "https://github.com/Vhonani24/Greetings#readme",
+  "devDependencies": {
+    "mocha": "^9.0.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-flash": "^0.0.2",
+    "express-flash-message": "^2.1.0",
+    "express-flash-messages": "^0.1.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "pg": "^8.7.1"
+  }
+}

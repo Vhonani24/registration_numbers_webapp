@@ -1,0 +1,36 @@
+<h1>Registration_number web-app</h2>
+    {{#if message}}
+    <div class="error">
+        <span style="color: red;">{{message}}</span>
+    </div>
+    {{/if}}
+
+    <form method="POST" class="row gx-3 gy-2 align-items-center ">
+
+
+        <div class="col-sm-3">
+            <label class="visually-hidden" for="specificSizeInputName">Registration</label>
+            <input type="text" class="form-control" id="regNumber" placeholder="Enter Reg.No.">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary" id="add">Add</button>
+        </div>
+
+        <div class="col-sm-3">
+            <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+            <select class="form-select" id="specificSizeSelect">
+                <option selected>Choose...</option>
+                <option value="All Towns">All Towns</option>
+                <option value="Bellvile">Bellvile</option>
+                <option value="Cape Town">Cape Town</option>
+                <option value="Paarl">Paarl</option>
+            </select>
+        </div>
+
+
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary" id="clear">Clear</button>
+        </div>
+
+        <div class="retrieve"></div>
+    </form>
