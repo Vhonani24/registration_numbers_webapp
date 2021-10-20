@@ -1,18 +1,22 @@
 .container{
-    background-color:#BC8F8F;
+    background-color:cornflowerblue;
     
     
 }
 h1 {
     color: #0000FF;
     font-family:fantasy;
+    padding: 2%;
+    width: 100%;
+    background-color: lightsteelblue;
+    text-align: center;
 }
 body{
     margin: auto;
     padding: 1em;
 }
 
-.test{
+.retrieve{
     background-color: yellow;
     border: black;
     border-style: solid;
@@ -21,5 +25,21 @@ body{
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
+    list-style-type: none;
+    float: left;
     
+}
+button{
+    display: inline-block;
+   
+}
+.buttons{
+    display: flex;
+    
+    justify-content: center;
+    align-content: center;
+
+    
+    
+
 }

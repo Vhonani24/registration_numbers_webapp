@@ -1,37 +1,47 @@
 
 module.exports = function Registrations(pool) {
-    
-    var regex = /^[a-zA-Z]{2}\s[0-9]+$/;
+
+    var regexA = /^[a-zA-Z]{2}\s[0-9]+$/;//allows space after CA
+    var regexB = /^[a-zA-Z]{2}\s[0-9._-]+$/;
+    var regexC = /^[a-zA-Z]{2}\s[0-9.\s]+$/;
+
 
     async function getRegistrations() {
-        const result = await pool.query("select * from regNumber")
+        const result = await pool.query("select  * from regNumber")
 
         return result.rows;
 
     }
-    async function addRegistration(reg) {
-        var townTag = reg.substring(0,2)
-        console.log(townTag + "this is townTag")
-        var towns_id = await getId(townTag)
-        console.log(towns_id + "this is towns_id")
-
-        await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [reg,towns_id])
-
-    }
-    async function getId(startString){
-        var result = await pool.query("select id from towns where start = $1", [startString])
-        return result.rows[0].id
-
-
-    }
     
+    async function addRegistration(reg) {
+        if (reg.match(regexA) || reg.match(regexB) || reg.match(regexC)) {
+            var townTag = reg.substring(0, 2).toUpperCase();
+            console.log(townTag + "this is townTag")
+            var towns_id = await getId(townTag)
+            console.log(towns_id + "this is towns_id")
+ 
+
+            await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [reg.toUpperCase(), towns_id])
+        }
+
+    }
+
+    async function getId(startString) {
+        var result = await pool.query("select * from towns where start = $1", [startString])
+        var rowResults = result.rows;
+        return rowResults[0].id
+
+
+    }
+
+
     async function getRegistration() {
         //console.log(regNum + "this is regnum");
         const result = await pool.query("select * from regNumber")
         return result.rows
 
     }
-    function addReg(reg,town) {
+    function addReg(reg, town) {
 
 
         if (reg.match(regex)) {
@@ -50,28 +60,11 @@ module.exports = function Registrations(pool) {
 
     }
 
-    async function pushRegNum(reg) {
-        var regToUpperCase = reg.toUpperCase()
-        try {
-            var uniqueReg = await getRegistration(regToUpperCase)
-            if (uniqueReg.rowCount === 0) {
-                var result = await addRegistration(regToUpperCase)
-            }
-            else {
-                
-            }
+    //add a function to filter through reg
 
 
-        } catch (err) {
-            console.error('Oops error has been detected!', err);
-            throw err;
-        }
 
 
-    }
-
-  
-   
     async function resetDatabase() {
         await pool.query(`DELETE  FROM regNumber`)
 
@@ -80,10 +73,10 @@ module.exports = function Registrations(pool) {
     return {
         getId,
         getRegistrations,
-        pushRegNum,
         addReg,
         resetDatabase,
-        getRegistration
+        getRegistration,
+        addRegistration
     }
 
 

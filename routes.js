@@ -21,26 +21,24 @@ module.exports = function myRegistrationsRoutes(registrations) {
 
         }
         else {
+            console.log(reg)
 
-            await registrations.pushRegNum(reg);
+            await registrations.addRegistration(reg);
+            
 
 
         }
-        res.render('index', {
-            message: req.flash('error'),
-           
-
-        });
+        res.redirect('/');
     }
-    /*async function resetData(req, res) {
-        await greetings.resetDatabase();
+    async function resetData(req, res) {
+        await registrations.resetDatabase();
         res.redirect('/');
 
-    }*/
+    }
     return {
         home,
         postData,
-        //resetData
+        resetData
     }
 
 }

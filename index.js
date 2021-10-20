@@ -60,7 +60,7 @@ app.post('/', routes.postData);
 
 
 
-//app.post('/reset', routes.resetData);
+app.post('/reset', routes.resetData);
 
 
 const PORT = process.env.PORT || 8000;

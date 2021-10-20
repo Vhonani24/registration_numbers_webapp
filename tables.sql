@@ -10,6 +10,10 @@ create table regNumber(
 	town_id int not null,
 	foreign key (town_id) references towns(id)
 );
+
+
 insert into towns(name,start) values('Cape Town','CA');
 insert into towns(name,start) values('Bellville','CY');
 insert into towns(name,start) values('Paarl','CJ');
+
+
