@@ -7,24 +7,60 @@ module.exports = function Registrations(pool) {
 
 
     async function getRegistrations() {
-        const result = await pool.query("select  * from regNumber")
+        const result = await pool.query("select * from regNumber")
 
         return result.rows;
 
     }
-    
-    async function addRegistration(reg) {
-        if (reg.match(regexA) || reg.match(regexB) || reg.match(regexC)) {
-            var townTag = reg.substring(0, 2).toUpperCase();
-            console.log(townTag + "this is townTag")
-            var towns_id = await getId(townTag)
-            console.log(towns_id + "this is towns_id")
- 
+    async function getRegistration() {
+        const result = await pool.query("select reg from regNumber")
 
-            await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [reg.toUpperCase(), towns_id])
-        }
+        return result.rows;
 
     }
+   
+    async function filterTowns(town) {
+        if (town === "All") {
+            const result = await pool.query("select * from regNumber")
+
+            return result.rows;
+            
+        } else {
+
+            const result = await pool.query("select reg from regNumber where town_id =$1", [town])
+
+            return result.rows;
+
+        }
+    }
+
+    async function addRegistration(reg) {
+        var regNum = reg.toUpperCase()
+        console.log(regNum + "testing")
+        var result = await regExist(regNum)
+        console.log(result + "adding");
+        if (regNum.match(regexA) || regNum.match(regexB) || regNum.match(regexC)) {
+            try {
+
+                if (result.rowCount === 0) {
+                    var townTag = regNum.substring(0, 2).toUpperCase();
+                    console.log(townTag + "this is townTag")
+                    var towns_id = await getId(townTag)
+                    console.log(towns_id + "this is towns_id")
+
+
+                    await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [regNum, towns_id])
+
+                }
+
+            } catch (err) {
+                console.error('Oops error has been detected!', err);
+                throw err;
+
+            }
+        }
+    }
+
 
     async function getId(startString) {
         var result = await pool.query("select * from towns where start = $1", [startString])
@@ -35,48 +71,29 @@ module.exports = function Registrations(pool) {
     }
 
 
-    async function getRegistration() {
-        //console.log(regNum + "this is regnum");
-        const result = await pool.query("select * from regNumber")
-        return result.rows
+    async function regExist(reg) {
+
+        const result = await pool.query("select reg from regNumber where reg = $1", [reg])
+        console.log(result.rowCount + "this is regnum");
+        return result
 
     }
-    function addReg(reg, town) {
-
-
-        if (reg.match(regex)) {
-            if (town === "All Towns") {
-                return reg.toUpperCase();
-            }
-            if (town === "Bellville") {
-                return reg.toUpperCase();
-            }
-            if (town === "Cape Town") {
-                return reg.toUpperCase();
-            }
-
-        }
-
-
-    }
-
-    //add a function to filter through reg
-
-
-
 
     async function resetDatabase() {
         await pool.query(`DELETE  FROM regNumber`)
+
+        
 
     }
 
     return {
         getId,
         getRegistrations,
-        addReg,
         resetDatabase,
-        getRegistration,
-        addRegistration
+        regExist,
+        addRegistration,
+        filterTowns,
+        getRegistration
     }
 
 

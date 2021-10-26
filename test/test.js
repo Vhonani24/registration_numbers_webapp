@@ -1,9 +1,9 @@
 const assert = require('assert');
-const Greetings = require('../greetings');
+const Registrations = require('../registration_number');
 const pg = require("pg");
 const Pool = pg.Pool;
 // we are using a special test database for the tests
-const connectionString = process.env.DATABASE_URL || 'postgresql://vhonani:vhonani123@localhost:5432/greet';
+const connectionString = process.env.DATABASE_URL || 'postgresql://vhonani:vhonani123@localhost:5432/registrations';
 
 const pool = new Pool({
     connectionString,
@@ -14,110 +14,89 @@ const pool = new Pool({
 
 beforeEach(async function () {
     // clean the tables before each test run
-    await pool.query("delete from users;");
+    await pool.query("delete from regNumber;");
 });
 
-describe('The greet function', function () {
+describe('Registration_numbers', function () {
 
-    it('should set counter to 0 when database is reset', async function () {
+    it('should be able to add a valid reistration number from Cape Town, Bellville or Paarl', async function () {
 
-        let testGreet = Greetings(pool);
+        let testRegistrations = Registrations(pool);
 
-        await testGreet.resetDatabase();
+        await testRegistrations.addRegistration('CA 123-456');
+        await testRegistrations.addRegistration('CY 123 456');
+        await testRegistrations.addRegistration('CJ 123456');
 
-        assert.equal(0, await testGreet.setCounter());
+        assert.deepEqual([
+            { reg: 'CA 123-456' },
+            { reg: 'CY 123 456' },
+            { reg: 'CJ 123456' }
+        ]
+            , await testRegistrations.getRegistration());
     });
-    it('should be able to take in a name and return a greeting in Mandarin and that name with the first letter uppercased', function () {
+    it('should be able to add a valid registration number from Cape Town with a lowercase town tag and return it in uppercase', async function () {
 
-        let testGreet = Greetings();
+        let testRegistrations = Registrations(pool);
+
+        await testRegistrations.addRegistration('ca 000-456');
 
 
-        assert.equal('你好吗, Ted', testGreet.greet('ted', 'Mandarin'));
+
+        assert.deepEqual([
+            {
+                reg: 'CA 000-456'
+            }
+        ]
+            , await testRegistrations.getRegistration());
     });
-    it('should be able to take in a name and return a greeting in French and that name with the first letter uppercased', function () {
+    it('should NOT be able to add duplicate registration number from Cape Town', async function () {
 
-        let testGreet = Greetings();
+        let testRegistrations = Registrations(pool);
+
+        await testRegistrations.addRegistration('CA 123-456');
+        await testRegistrations.addRegistration('CA 123-456');
+        await testRegistrations.addRegistration('CJ 123456');
 
 
-        assert.equal('Comment ça va, Ted', testGreet.greet('ted', 'French'));
+        assert.deepEqual([
+            { reg: 'CA 123-456' },
+            { reg: 'CJ 123456' }
+        ], await testRegistrations.getRegistration());
     });
 
 });
-describe('Counter', function () {
-    it('Should be able to return the count number if one person greeted', async function () {
+describe('Filter', function () {
+    it('Should be able to return the reg from Cape Town', async function () {
 
-        let testGreet = Greetings(pool);
+        let testRegistrations = Registrations(pool);
 
-        await testGreet.addName('Musa');
-        await testGreet.updateCounter('Musa');
+        await testRegistrations.addRegistration('CA 123-456');
+        await testRegistrations.addRegistration('Ca 000-111')
+        await testRegistrations.addRegistration('CY 000-456');
+        await testRegistrations.addRegistration('CJ 123-456');
 
-        assert.equal(1, await testGreet.setCounter());
-
-    });
-    it('Should be able to return the count number if same person greetet in all 3 langauges', async function () {
-
-        let testGreet = Greetings(pool);
-
-
-        await testGreet.pushNames('Musa');
-        await testGreet.pushNames('Musa');
-        await testGreet.pushNames('MUsa');
-        testGreet.greet('Musa', 'French');
-        testGreet.greet('Musa', 'Spanish');
-        testGreet.greet('Musa', 'Mandarin');
-
-        assert.equal(1, await testGreet.setCounter());
+        assert.deepEqual([
+            { reg: 'CA 123-456' },
+            { reg: 'CA 000-111' }
+        ], await testRegistrations.filterTowns('1'));
 
     });
+    describe('Reset', async function () {
 
+        it('should clear the database when reset', async function () {
 
+            let testRegistrations = Registrations(pool);
 
-});
-describe('Name list', async function () {
-    it('Should be able to return the list of all the names greeted', async function () {
+            await testRegistrations.addRegistration('CA 123-456');
+            await testRegistrations.addRegistration('CY 000-456');
+            await testRegistrations.addRegistration('CJ 123-456');
+            await testRegistrations.resetDatabase()
 
-        let testGreet = Greetings(pool);
-
-
-        await testGreet.pushNames('Musa');
-        await testGreet.pushNames('Mulalo');
-        await testGreet.pushNames('Naledi');
-        await testGreet.pushNames('Piet');
-        
-        var nameList = [];
-        var greeted = await testGreet.greeted();
-        for (var i = 0; i < greeted.length; i++) {
-            nameList.push(greeted[i].name);
-            //console.log(nameList);
-
-        }
-
-
-
-        assert.deepEqual(
-            ["Musa","Mulalo","Naledi","Piet"], nameList)
-
+            assert.deepEqual([], await testRegistrations.getRegistrations());
+        });
 
     });
-    it('Should be able to return the list of all the names greeted', async function () {
 
-        let testGreet = Greetings(pool);
-
-        await testGreet.pushNames('Mulalo');
-        await testGreet.pushNames('Mulalo');
-        await testGreet.pushNames('Mashudu');
-
-        var nameList = [];
-        var greeted = await testGreet.greeted();
-        for (var i = 0; i < greeted.length; i++) {
-            nameList.push(greeted[i].name);
-            //console.log(nameList);
-
-        }
-
-        assert.deepEqual(["Mulalo","Mashudu"], nameList)
-
-    });
 
 });
 after(function () {

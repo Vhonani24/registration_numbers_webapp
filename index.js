@@ -53,10 +53,13 @@ app.use(flash());
 
 app.get('/', routes.home);
 
+app.get('/filter', routes.getFilter);
+
+app.post('/filter', routes.postFilter);
 
 
-app.post('/', routes.postData);
 
+app.post('/reg_numbers', routes.postData);
 
 
 

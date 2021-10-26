@@ -1,7 +1,17 @@
 <h1>Registration_number web-app</h2>
     {{#if message}}
-    <div class="error">
+    <div class="error" id="error">
         <span style="color: red;">{{message}}</span>
+    </div>
+    {{/if}}
+    {{#if success}}
+    <div class="error1" id="error">
+        <span style="color:darkgreen">{{success}}</span>
+    </div>
+    {{/if}}
+    {{#if warning}}
+    <div class="error2" id="error">
+        <span style="color:darkorange">{{warning}}</span>
     </div>
     {{/if}}
 
@@ -31,26 +41,37 @@
         </div>
     </div>
 
-    <form method="POST" class="row gx-3 gy-2 align-items-center ">
+    <form action="/reg_numbers" method="POST" class="row gx-3 gy-2 align-items-center ">
 
 
         <div class="buttons">
-            <label class="visually-hidden" for="specificSizeInputName">Registration</label>
-            <input type="text" class="form-control" name="reg" id="reg" placeholder="Enter Reg.No.">
-            <div class="col-auto">
-                <button type="submit" class="btn btn-success" id="submit">Add</button>
+            <div class="col-xs-2" style=" margin-right: 5px;">
+                <label class="visually-hidden " for="specificSizeInputName">Registration</label>
+                <input type="text" class="form-control" name="reg" id="reg" placeholder="Enter Reg.No.">
             </div>
+
+            <button type="submit" class="btn btn-success" id="add" style=" margin-right: 5px;">Add</button>
+
     </form>
-    <div class="col-sm-3">
-        <label class="visually-hidden" for="specificSizeSelect">Preference</label>
-        <select class="form-select" id="specificSizeSelect">
-            <option selected>Choose...</option>
-            <option value="All Towns">All Towns</option>
-            <option value="Bellvile">Bellvile</option>
-            <option value="Cape Town">Cape Town</option>
-            <option value="Paarl">Paarl</option>
-        </select>
-    </div>
+    <form action="/filter" method="POST" class="buttons">
+        <div style="margin-right: 5px;">
+            <select class="form-select" name="towns" aria-label="Default select example">
+             
+                <option value="All">All Towns</option>
+                <option value="2">Bellville</option>
+                <option value="1">Cape Town</option>
+                <option value="3">Paarl</option>
+            </select>
+
+        </div>
+
+        <div class="col-auto" style=" margin-right: 5px;">
+            <button type="submit" class="btn btn-success" id="submit">Submit</button>
+        </div>
+
+
+    </form>
+
 
     <form action="/reset" method="post">
         <div class="col-auto">
