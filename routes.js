@@ -3,7 +3,7 @@ module.exports = function myRegistrationsRoutes(registrations) {
     async function home(req, res) {
         var getRegies = await registrations.getRegistrations();
 
-        console.log(getRegies + 'show reg');
+        //console.log(getRegies + 'show reg');
 
         res.render('index', {
             message: req.flash('error'),
@@ -24,7 +24,7 @@ module.exports = function myRegistrationsRoutes(registrations) {
     }
     async function postFilter(req, res) {
         let town = req.body.towns;
-        console.log(town + " this is my towns");
+        //console.log(town + " this is my towns");
         
         if (!town) {
             req.flash('error', 'Please select from drop down menu')
@@ -50,7 +50,7 @@ module.exports = function myRegistrationsRoutes(registrations) {
 
         }*/
         else {
-            console.log(reg)
+            //console.log(reg)
           req.flash('error1', 'Hurray! You have successfully added a valid registration number!!');
            
             
