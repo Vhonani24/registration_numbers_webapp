@@ -4,6 +4,7 @@ module.exports = function Registrations(pool) {
     var regexA = /^[a-zA-Z]{2}\s[0-9]+$/;//allows space after CA
     var regexB = /^[a-zA-Z]{2}\s[0-9._-]+$/;
     var regexC = /^[a-zA-Z]{2}\s[0-9.\s]+$/;
+    
 
 
     async function getRegistrations() {
@@ -50,7 +51,10 @@ module.exports = function Registrations(pool) {
 
 
                     await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [regNum, towns_id])
+                    return true;
 
+                }else{
+                    return false
                 }
 
             } catch (err) {

@@ -38,9 +38,9 @@ button{
     display: flex;
     margin-right: 5px;
     justify-content: center;
-    align-content: center;
+    align-content: center;    
 
-    
-    
-
+}
+.example{
+    font-size: 15px;
 }

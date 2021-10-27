@@ -5,12 +5,12 @@
     </div>
     {{/if}}
     {{#if success}}
-    <div class="error1" id="error">
+    <div class="success" id="error">
         <span style="color:darkgreen">{{success}}</span>
     </div>
     {{/if}}
     {{#if warning}}
-    <div class="error2" id="error">
+    <div class="warning" id="error">
         <span style="color:darkorange">{{warning}}</span>
     </div>
     {{/if}}
@@ -31,9 +31,9 @@
         <div>
             Valid registrations numbers are from the following towns:
             <ol>
-                <li>Cape Town(CA) </li>
-                <li>Bellville(CY)</li>
-                <li>Paarl(CJ)</li>
+                <li>Cape Town(CA)<span class="example">e.g. CA 123-456</span> </li>
+                <li>Bellville(CY)<span class="example">e.g. CY 123 456</span> </li>
+                <li>Paarl(CJ)<span class="example">e.g. CJ 123456</span></li>
             </ol>
 
 
@@ -56,9 +56,8 @@
     <form action="/filter" method="POST" class="buttons">
         <div style="margin-right: 5px;">
             <select class="form-select" name="towns" aria-label="Default select example">
-             
                 <option value="All">All Towns</option>
-                <option value="2">Bellville</option>
+                <option value="2">Bellville </option>
                 <option value="1">Cape Town</option>
                 <option value="3">Paarl</option>
             </select>
