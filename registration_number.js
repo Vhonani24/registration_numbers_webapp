@@ -1,7 +1,7 @@
 
 module.exports = function Registrations(pool) {
 
-    var regexA = /^[a-zA-Z]{2}\s[0-9]+$/;//allows space after CA
+    var regexA = /^[a-zA-Z]{2}\s[0-9]+$/;
     var regexB = /^[a-zA-Z]{2}\s[0-9._-]+$/;
     var regexC = /^[a-zA-Z]{2}\s[0-9.\s]+$/;
     
@@ -39,19 +39,14 @@ module.exports = function Registrations(pool) {
 
     async function addRegistration(reg) {
         var regNum = reg.toUpperCase()
-        //console.log(regNum + "testing")
         var result = await regExist(regNum)
-        //console.log(result + "adding");
         if (regNum.match(regexA) || regNum.match(regexB) || regNum.match(regexC)) {
             try {
 
                 if (result.rowCount === 0) {
                     var townTag = regNum.substring(0, 2).toUpperCase();
-                    //console.log(townTag + "this is townTag")
                     var towns_id = await getId(townTag)
-                    //console.log(towns_id + "this is towns_id")
-
-
+                    
                     await pool.query("INSERT INTO regNumber(reg,town_id)  values($1,$2)", [regNum, towns_id])
                     return true;
 
@@ -80,7 +75,6 @@ module.exports = function Registrations(pool) {
     async function regExist(reg) {
 
         const result = await pool.query("select reg from regNumber where reg = $1", [reg])
-        //console.log(result.rowCount + "this is regnum");
         return result
 
     }

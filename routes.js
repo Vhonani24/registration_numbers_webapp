@@ -4,8 +4,6 @@ module.exports = function myRegistrationsRoutes(registrations) {
     async function home(req, res) {
         var getRegies = await registrations.getRegistrations();
 
-        //console.log(getRegies + 'show reg');
-
         res.render('index', {
             message: req.flash('error'),
             success: req.flash('success'),
@@ -31,7 +29,6 @@ module.exports = function myRegistrationsRoutes(registrations) {
         });
     }
 
-
     async function postData(req, res) {
         const { reg } = req.body;
 
@@ -44,7 +41,7 @@ module.exports = function myRegistrationsRoutes(registrations) {
             req.flash('warning', 'This registration number already exist, try adding another one.');
 
         } else {
-            //console.log(reg)
+          
             req.flash('success', 'Hurray! You have successfully added a valid registration number!!');
 
 

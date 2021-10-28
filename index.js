@@ -13,7 +13,6 @@ let local = process.env.LOCAL || false;
 if (process.env.DATABASE_URL && !local){
     useSSL = true;
 }
-// which db connection to use
 const connectionString = process.env.DATABASE_URL || 'postgresql://vhonani:vhonani123@localhost:5432/registrations';
 
 const pool = new Pool({
