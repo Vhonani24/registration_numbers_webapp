@@ -21,12 +21,14 @@ module.exports = function Registrations(pool) {
     }
    
     async function filterTowns(town) {
+        
         if (town === "All") {
             const result = await pool.query("select * from regNumber")
 
             return result.rows;
             
-        } else {
+        }
+         else {
 
             const result = await pool.query("select reg from regNumber where town_id =$1", [town])
 

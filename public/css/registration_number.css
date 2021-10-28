@@ -1,8 +1,19 @@
 .container{
     background-color:cornflowerblue;
+    width: fit-content;
+    block-size: fit-content;
+    overflow: auto;
+    zoom: 1;
+    padding: 1em;
     
+}  
     
+.col-sm{
+    background-color:cornflowerblue;
+    width: fit-content;
+    block-size: fit-content;
 }
+
 h1 {
     color: #0000FF;
     font-family:fantasy;
@@ -10,10 +21,14 @@ h1 {
     width: 100%;
     background-color: lightsteelblue;
     text-align: center;
+
+    
 }
+
 body{
     margin: auto;
     padding: 1em;
+    
 }
 
 .retrieve{

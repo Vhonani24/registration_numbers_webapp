@@ -1,34 +1,38 @@
-<h1>Registration_number web-app</h2>
-    {{#if message}}
-    <div class="error" id="error">
-        <span style="color: red;">{{message}}</span>
-    </div>
-    {{/if}}
-    {{#if success}}
-    <div class="success" id="error">
-        <span style="color:darkgreen">{{success}}</span>
-    </div>
-    {{/if}}
-    {{#if warning}}
-    <div class="warning" id="error">
-        <span style="color:darkorange">{{warning}}</span>
-    </div>
-    {{/if}}
+<div class="text-break text-wrap">
+    <h1 class="header">Registration_number web-app</h2>
+</div>
 
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+{{#if message}}
+<div class="error" id="error">
+    <span style="color: red;">{{message}}</span>
+</div>
 
-        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path
-                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-        </symbol>
+{{/if}}
+{{#if success}}
+<div class="success" id="error">
+    <span style="color:darkgreen">{{success}}</span>
+</div>
+{{/if}}
+{{#if warning}}
+<div class="warning" id="error">
+    <span style="color:darkorange">{{warning}}</span>
+</div>
+{{/if}}
 
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 
-    <div class="alert alert-primary d-flex" role="alert">
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+    </symbol>
+
+</svg>
+<div>
+    <div class="alert alert-primary d-flex " role="alert">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
             <use xlink:href="#info-fill" />
         </svg>
-        <div>
+        <div class="text-break text-wrap">
             Valid registrations numbers are from the following towns:
             <ol>
                 <li>Cape Town(CA)<span class="example">e.g. CA 123-456</span> </li>
@@ -41,50 +45,54 @@
         </div>
     </div>
 
-    <form action="/reg_numbers" method="POST" class="row gx-3 gy-2 align-items-center ">
+</div>
 
 
-        <div class="buttons">
-            <div class="col-xs-2" style=" margin-right: 5px;">
-                <label class="visually-hidden " for="specificSizeInputName">Registration</label>
-                <input type="text" class="form-control" name="reg" id="reg" placeholder="Enter Reg.No.">
-            </div>
 
-            <button type="submit" class="btn btn-success" id="add" style=" margin-right: 5px;">Add</button>
+<form action="/reg_numbers" method="POST" class="row gx-3 gy-2 align-items-center ">
 
-    </form>
-    <form action="/filter" method="POST" class="buttons">
-        <div style="margin-right: 5px;">
-            <select class="form-select" name="towns" aria-label="Default select example">
-                <option value="All">All Towns</option>
-                <option value="2">Bellville </option>
-                <option value="1">Cape Town</option>
-                <option value="3">Paarl</option>
-            </select>
 
+    <div class="buttons">
+        <div class="col-xs-2" style=" margin-right: 5px;">
+            <label class="visually-hidden " for="specificSizeInputName">Registration</label>
+            <input type="text" class="form-control" name="reg" id="reg" placeholder="Enter Reg.No.">
         </div>
 
-        <div class="col-auto" style=" margin-right: 5px;">
-            <button type="submit" class="btn btn-success" id="submit">Submit</button>
-        </div>
+        <button type="submit" class="btn btn-success" id="add" style=" margin-right: 5px;">Add</button>
 
+</form>
+<form action="/filter" method="POST" class="buttons" name="filter">
+    <div style="margin-right: 5px;">
+        <select class="form-select" name="towns" aria-label="Default select example">
+            <option value="All">All Towns</option>
+            <option value="2">Bellville </option>
+            <option value="1">Cape Town</option>
+            <option value="3">Paarl</option>
+        </select>
 
-    </form>
+    </div>
 
-
-    <form action="/reset" method="post">
-        <div class="col-auto">
-            <button type="submit" class="btn btn-danger" id="clear">Clear</button>
-        </div>
-
-    </form>
+    <div class="col-auto" style=" margin-right: 5px;">
+        <button type="submit" class="btn btn-success" id="submit">Submit</button>
     </div>
 
 
-    <div>
-        {{#each listOfRegies}}
-        <ul>
-            <li class="retrieve">{{this.reg}}</li>
-        </ul>
-        {{/each}}
+</form>
+
+
+<form action="/reset" method="post">
+    <div class="col-auto">
+        <button type="submit" class="btn btn-danger" id="clear">Clear</button>
     </div>
+
+</form>
+</div>
+
+
+<div>
+    {{#each listOfRegies}}
+    <ul>
+        <li class="retrieve">{{this.reg}}</li>
+    </ul>
+    {{/each}}
+</div>

@@ -1,5 +1,6 @@
 module.exports = function myRegistrationsRoutes(registrations) {
 
+ 
     async function home(req, res) {
         var getRegies = await registrations.getRegistrations();
 
@@ -24,14 +25,8 @@ module.exports = function myRegistrationsRoutes(registrations) {
     }
     async function postFilter(req, res) {
         let town = req.body.towns;
-        //console.log(town + " this is my towns");
-
-        if (!town) {
-            req.flash('error', 'Please select from drop down menu')
-
-        } else {
-            all = await registrations.filterTowns(town)
-        } res.render('index', {
+          var all = await registrations.filterTowns(town)
+        res.render('index', {
             listOfRegies: all
         });
     }
@@ -62,7 +57,7 @@ module.exports = function myRegistrationsRoutes(registrations) {
     }
     async function resetData(req, res) {
         await registrations.resetDatabase();
-        res.redirect('/reg_numbers');
+        res.redirect('/');
 
     }
     return {
