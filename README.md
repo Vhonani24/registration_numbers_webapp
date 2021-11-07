@@ -5,7 +5,9 @@ registration_numbers
     • Users are able to add to add unique number plates to the app(No duplicates).
     • No number plates will be added if the input field is empty.
     • New added registration numbers are displayed at the bottom of the app.
-      Setup
+     
+     Setup
+     
 To run this example locally you will need to have installed:
     • NodeJS version 12+ install it using nvm
     • npm
