@@ -1,5 +1,5 @@
 [![Build Status](https://app.travis-ci.com/Vhonani24/registration_numbers_webapp.svg?branch=master)](https://app.travis-ci.com/Vhonani24/registration_numbers_webapp)
-registration_numbers_webapp
+Registration_numbers_webapp:
     • This web-app displays valid car registration numbers from Cape Town, Paarl and Bellville.
     • The number plates are displayed with rounded corners and a yellow background, with a black border.
     • Users are able to add to add unique number plates to the app(No duplicates).
